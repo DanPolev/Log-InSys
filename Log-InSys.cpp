@@ -1,5 +1,5 @@
 ﻿/* Trivial log-in/registration system.
-*  Record input username and password to file.
+*  Write input username and password to file.
 */
 #include <Windows.h>
 #include <iostream>
