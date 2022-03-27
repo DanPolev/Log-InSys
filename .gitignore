@@ -10,7 +10,9 @@
 *.userosscache
 *.sln.docstates
 DataBase.txt
-
+*.sln
+*.vcxproj
+*.vcxproj.filters
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
