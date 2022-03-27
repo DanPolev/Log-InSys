@@ -40,7 +40,7 @@ bool DataBase::isPasswdValid(std::string& username) {
         if (m_userPasswdMap[username] != password) {
             std::cout << "Incorrect password!\n";
 
-            if (quitID > 3) {
+            if (quitID >= 3) {
                 std::cout << "Attempt limit is exceeded! Shutdown program...\n";
                 return false;
             }
