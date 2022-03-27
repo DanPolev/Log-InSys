@@ -46,11 +46,10 @@ void DataBase::print() const{
         throw std::runtime_error("DataBase::print(): Cannont open DataBase.txt file.");
     }
 
-    std::setiosflags(std::ios::left);
-    const int columnWidth(10);
-    outFile << "# Username  Password\n";
+    const int columnWidth(16);
+    outFile << "# Username        Password\n";
     for (const auto& elmt : m_userPasswdMap) {
-        outFile << "  " << elmt.first << std::setw(columnWidth) << elmt.second << "\n";
+        outFile << "  " << std::left << std::setw(columnWidth) << elmt.first << elmt.second << "\n";
     }
     outFile.close();
 }
