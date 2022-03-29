@@ -28,7 +28,10 @@ int main()
         std::cin >> username;
         if (db.isUserCreated(username)) {
             if (db.isPasswdValid(username)) {
-                std::cout << "Password is correct.\n";
+                db.setCurrUser(username);
+                std::cout << "Current user :\n"
+                          << "  username:" << db.getCurrUser().getUsername() << "\n"
+                          << "  password:" << db.getCurrUser().getUserPasswd() << "\n";
             }
         }
         else {

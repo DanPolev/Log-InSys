@@ -7,7 +7,7 @@
 
 #include "DataBase.h"
 
-bool DataBase::isUserCreated(const std::string& username) const {
+bool DataBase::isUserCreated(const std::string& username) {
     auto search = m_userPasswdMap.find(username);
     if (search == m_userPasswdMap.end()) {
         return false;
@@ -26,9 +26,10 @@ std::string DataBase::setPassword() {
 
 void DataBase::createUser(const std::string& username) {
     std::cout << "There is no account with such username.\n"
-        << "Creating new account...\n";
+              << "Creating new account...\n";
     std::string password = setPassword();
     m_userPasswdMap.insert(std::make_pair(username, password));
+    m_currUser.setUser(username, password);
     std::cout << username << "'s account created.\n";
 }
 bool DataBase::isPasswdValid(std::string& username) {
@@ -50,9 +51,15 @@ bool DataBase::isPasswdValid(std::string& username) {
 
         }
         else {
+            m_currUser.setUser(username, password);
             return true;
         }
     } while (m_userPasswdMap[username] != password);
+}
+
+void DataBase::setCurrUser(const std::string& username) {
+    std::string password = m_userPasswdMap[username];
+    m_currUser.setUser(username, password);
 }
 
 void DataBase::read() {
