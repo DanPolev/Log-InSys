@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <utility>
+#include <string>
 #include <exception>
 #include <iomanip>  // for setw() func
 
