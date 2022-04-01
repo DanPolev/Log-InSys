@@ -2,15 +2,16 @@
 #include <fstream>
 #include <sstream>
 #include <utility>
+#include <map>
 #include <string>
 #include <exception>
 #include <iomanip>  // for setw() func
 
 #include "DataBase.h"
 
-bool DataBase::isUserCreated(const std::string& username) {
-    auto search = m_userPasswdMap.find(username);
-    if (search == m_userPasswdMap.end()) {
+bool DataBase::doesUserExist(const std::string& username) {
+    bool doesKeyExist = m_userPasswdMap.count(username);
+    if (!doesKeyExist) {
         return false;
     }
     else {
@@ -18,7 +19,7 @@ bool DataBase::isUserCreated(const std::string& username) {
     }
 }
 
-std::string DataBase::setPassword() {
+const std::string DataBase::setPassword() {
     std::cout << "Enter password:";
     std::string password;
     std::cin >> password;
@@ -33,16 +34,16 @@ void DataBase::createUser(const std::string& username) {
     m_currUser.setUser(username, password);
     std::cout << username << "'s account created.\n";
 }
-bool DataBase::isPasswdValid(std::string& username) {
+
+bool DataBase::isPasswdValid(const std::string& username, int quitID) {
     std::string password;
-    int quitID(1);
     do {
         password = setPassword();
         if (m_userPasswdMap[username] != password) {
             std::cout << "Incorrect password!\n";
 
             if (quitID >= 3) {
-                std::cout << "Attempt limit is exceeded! Shutdown program...\n";
+                std::cout << "Attempt limit is exceeded! Access denied!\n";
                 return false;
             }
 
@@ -101,3 +102,40 @@ void DataBase::print() const {
     std::cout << m_filename << " created.\n";
     outFile.close();
 }
+<<<<<<< HEAD
+=======
+
+void DataBase::changeUsername() {
+    if (!isPasswdValid(m_currUser.getUsername(), 3)) {
+        return;
+    }
+    std::cout << "Enter new username:";
+    std::string newUsername;
+    do {
+        std::cin >> newUsername;
+        if (doesUserExist(newUsername)) {
+            std::cout << "There is already such username!\nEnter another one:\n";
+        }
+    } while (doesUserExist(newUsername));
+
+    auto nodeHandler = m_userPasswdMap.extract(m_currUser.getUsername());    
+    nodeHandler.key() = newUsername;
+    m_userPasswdMap.insert(std::move(nodeHandler));
+    m_currUser.setUser(newUsername, m_currUser.getUserPasswd());
+}
+
+void help() {
+    std::cout << "List of operations with database:\n"
+              << "  chn  - change current user's username;\n"
+              << "  chp  - change current user's password;\n"
+              << "  dusr - delete current user;\n"
+              << "  q    - quit the program.\n";
+}
+
+/*const char parseopt() {
+    std::cout << ":";
+    std::string opt;
+    std::cin >> opt;
+
+}*/
+>>>>>>> 78a39dc (- rename isUserCreated() into doesUserExist() with little corrections;)
