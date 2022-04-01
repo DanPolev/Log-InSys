@@ -90,7 +90,7 @@ void DataBase::print() const {
 
     outFile.open(m_filename, std::ios::out);
     if (!outFile.is_open()) {
-        std::string errstr = "DataBase::print(): Cannot open " + m_filename + "file.";
+        std::string errstr = "DataBase::print(): Cannot open " + m_filename + "file.\n";
         throw std::runtime_error(errstr);
     }
 
@@ -124,12 +124,32 @@ void DataBase::changeUsername() {
     m_currUser.setUser(newUsername, m_currUser.getUserPasswd());
 }
 
+void DataBase::deleteUser() {
+    if (!isPasswdValid(m_currUser.getUsername(), 3)) {
+        return;
+    }
+    std::cout << "CAUTION: You are going to delete your data from database!\n";
+    std::cout << "Are you sure?(y/n):";
+    char answer;
+    std::cin >> answer;
+    if (answer == 'n') return;
+
+    m_userPasswdMap.erase(m_currUser.getUsername());
+    std::cout << "User " << m_currUser.getUsername() << " deleted.\n";
+    print();
+    quit();
+}
+
 void help() {
     std::cout << "List of operations with database:\n"
               << "  chn  - change current user's username;\n"
               << "  chp  - change current user's password;\n"
               << "  dusr - delete current user;\n"
               << "  q    - quit the program.\n";
+}
+
+void quit() {
+    throw std::runtime_error("Quit function've called. Shutdown the program...\n");
 }
 
 /*const char parseopt() {

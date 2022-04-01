@@ -29,9 +29,6 @@ int main()
         if (db.doesUserExist(username)) {
             if (db.isPasswdValid(username)) {
                 db.setCurrUser(username);
-                //std::cout << "Current user :\n"
-                //          << "  username:" << db.getCurrUser().getUsername() << "\n"
-                //          << "  password:" << db.getCurrUser().getUserPasswd() << "\n";
             }
         }
         else {
@@ -48,12 +45,14 @@ int main()
             i++;
         } while (opt != 'q');
         */
-        db.changeUsername();
+
+        //db.changeUsername();
+        db.deleteUser();
         db.print();
     }
     catch (std::exception& e) {
-        std::cerr << "Error: " << e.what() << "\n";
-        exit(1);
+        std::cerr << e.what();
+        return 0;
     }
     
     return 0;

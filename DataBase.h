@@ -20,13 +20,14 @@ public:
     void createUser(const std::string& username);
     bool isPasswdValid(const std::string& username, int quitID = 1);
     void setCurrUser(const std::string& username);
-    const User getCurrUser() { return m_currUser; }
+    const User getCurrUser() const { return m_currUser; }
     void read();
     void print() const;
     void changeUsername();
     //void changePasswd();
-    //void deleteUser();
+    void deleteUser();
 };
 
 void help();
+void quit();
 //const char parseopt();
