@@ -53,7 +53,6 @@ bool DataBase::isPasswdValid(const std::string& username, int quitID) {
 
         }
         else {
-            m_currUser.setUser(username, password);
             return true;
         }
     } while (m_userPasswdMap[username] != password);
@@ -122,6 +121,10 @@ void DataBase::changeUsername() {
     nodeHandler.key() = newUsername;
     m_userPasswdMap.insert(std::move(nodeHandler));
     m_currUser.setUser(newUsername, m_currUser.getUserPasswd());
+}
+
+void DataBase::changePasswd() {
+
 }
 
 void DataBase::deleteUser() {
