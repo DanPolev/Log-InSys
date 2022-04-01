@@ -105,7 +105,7 @@ void DataBase::print() const {
 =======
 
 void DataBase::changeUsername() {
-    if (!isPasswdValid(m_currUser.getUsername(), 3)) {
+    if (!isPasswdValid(m_currUser.getUsername())) {
         return;
     }
     std::cout << "Enter new username:";
@@ -124,7 +124,16 @@ void DataBase::changeUsername() {
 }
 
 void DataBase::changePasswd() {
+    if (!isPasswdValid(m_currUser.getUsername())) {
+        return;
+    }
 
+    std::cout << "Enter new password:";
+    std::string newPassword;
+    std::cin >> newPassword;
+
+    m_userPasswdMap[m_currUser.getUsername()] = newPassword;
+    std::cout << m_currUser.getUsername() << "'s password has been succesfully changed.\n";
 }
 
 void DataBase::deleteUser() {

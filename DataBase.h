@@ -24,7 +24,7 @@ public:
     void read();
     void print() const;
     void changeUsername();
-    //void changePasswd();
+    void changePasswd();
     void deleteUser();
 };
 

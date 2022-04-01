@@ -47,7 +47,8 @@ int main()
         */
 
         //db.changeUsername();
-        db.deleteUser();
+        //db.deleteUser();
+        //db.changePasswd();
         db.print();
     }
     catch (std::exception& e) {
