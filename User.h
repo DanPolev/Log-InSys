@@ -12,6 +12,6 @@ public:
         name = username;
         password = passwd;
     }
-    std::string getUsername() { return name; }
-    std::string getUserPasswd() { return password; }
+    const std::string getUsername() const { return name; }
+    const std::string getUserPasswd() const { return password; }
 };
