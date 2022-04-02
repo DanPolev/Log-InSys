@@ -31,7 +31,6 @@ void DataBase::createUser(const std::string& username) {
     m_userPasswdMap.insert(std::make_pair(username, password));
     std::cout << username << "'s account created.\n";
 }
-// TODO: Check performance of the func
 bool DataBase::isPasswdValid(std::string& username) {
     std::string password;
     int quitID(1);
