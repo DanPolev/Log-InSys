@@ -3,20 +3,27 @@
 #include <map>
 #include <functional>
 #include <utility>
-//#include <string>
+#include <string>
 
 #include "User.h"
 
-typedef std::map<std::string, std::string> Tstringmap;
-typedef std::map<std::string, std::function<void()>> Tstring_functionMap;
-
 class DataBase {
 private:
-    Tstringmap m_userPasswdMap;
-    const Tstring_functionMap m_funcmap { {"chn", &changeUsername}};
+    //typedef std::map<std::string, std::string> Tstringmap;
+    //typedef std::map < std::string, std::function<void()> > Tstring_functionMap;
+
+    std::map<std::string, std::string> m_userPasswdMap;
+    static std::map < std::string, std::function<void()> > m_funcmap;
     const std::string m_filename = "DataBase.txt";
     User m_currUser;
 public:
+
+    DataBase() {
+        m_funcmap.emplace(std::make_pair("chn", &changeUsername));
+        m_funcmap.emplace(std::make_pair("chp", &changePasswd));
+        m_funcmap.emplace(std::make_pair("duser", &deleteUser));
+        m_funcmap.emplace(std::make_pair("q", &quit));
+    }
 
     bool doesUserExist(const std::string& username);
     const std::string setPassword();
