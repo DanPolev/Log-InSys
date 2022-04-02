@@ -1,2 +1,2 @@
 # A simple log-in/registration system.
-Write input username and password to file.
+Writes input username and password to file.
