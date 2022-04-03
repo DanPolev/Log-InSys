@@ -7,21 +7,18 @@
 
 #include "User.h"
 
+typedef std::map<std::string, std::function<void()>>::const_iterator map_constIterator;
+
 class DataBase {
 private:
+    typedef void(DataBase::* funcPtr)();
     std::map<std::string, std::string> m_userPasswdMap;
-    static std::map < std::string, std::function<void()> > m_funcmap;
+    std::map < std::string, std::function<void()> > m_funcmap; // TODO: how to make it static???
     const std::string m_filename = "DataBase.txt";
     User m_currUser;
 public:
 
-    DataBase() {
-        m_funcmap.emplace(std::make_pair("chn", &changeUsername));
-        m_funcmap.emplace(std::make_pair("chp", &changePasswd));
-        m_funcmap.emplace(std::make_pair("duser", &deleteUser));
-        m_funcmap.emplace(std::make_pair("q", &quit));
-    }
-
+    DataBase();
     bool doesUserExist(const std::string& username);
     const std::string setPassword();
     void createUser(const std::string& username);
@@ -33,8 +30,9 @@ public:
     void changeUsername();
     void changePasswd();
     void deleteUser();
+    map_constIterator getfunc(const std::string& opt) const { return m_funcmap.find(opt); }
+    void quit(); // TODO: Make class-exception to throw SUCCESS_EXIT and then print map
 };
-
 void help();
-void quit();
-//const char parseopt();
+//void quit();
+void parseopt(const DataBase& db);

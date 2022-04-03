@@ -34,25 +34,17 @@ int main()
         else {
             db.createUser(username);
         }
-        //
-        /*int i(0);
-        char opt = ' ';
-        do {
+        int i(0);
+        while(1) {
             if (i == 0) {
                 help();
+                i++;
             }
-            opt = parseopt();
-            i++;
-        } while (opt != 'q');
-        */
-
-        //db.changeUsername();
-        //db.deleteUser();
-        //db.changePasswd();
-        db.print();
+            parseopt(db);
+        }
     }
     catch (std::exception& e) {
-        std::cerr << e.what();
+        std::cout << e.what();
         return 0;
     }
     

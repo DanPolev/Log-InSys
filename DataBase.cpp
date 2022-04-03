@@ -9,6 +9,14 @@
 
 #include "DataBase.h"
 
+DataBase::DataBase() {
+    m_funcmap["chn"] = [this]() { changeUsername(); };
+    m_funcmap["chp"] = [this]() { changePasswd(); };
+    m_funcmap["duser"] = [this]() { deleteUser(); };
+    m_funcmap["help"] = []() { help(); };
+    m_funcmap["q"] = [this]() { quit(); };
+}
+
 /*************************
 * DataBase::doesUserExist
 * -----------------------
@@ -163,6 +171,7 @@ void DataBase::changeUsername() {
     nodeHandler.key() = newUsername;
     m_userPasswdMap.insert(std::move(nodeHandler));
     m_currUser.setUser(newUsername, m_currUser.getUserPasswd());
+    std::cout << "Your username's been changed.\n";
 }
 /**************************
 * DataBase::changePasswd
@@ -180,7 +189,7 @@ void DataBase::changePasswd() {
     std::cin >> newPassword;
 
     m_userPasswdMap[m_currUser.getUsername()] = newPassword;
-    std::cout << m_currUser.getUsername() << "'s password has been succesfully changed.\n";
+    std::cout << m_currUser.getUsername() << "'s password's been changed.\n";
 }
 /****************************
 * DataBase::deleteUser
@@ -201,8 +210,16 @@ void DataBase::deleteUser() {
 
     m_userPasswdMap.erase(m_currUser.getUsername());
     std::cout << "User " << m_currUser.getUsername() << " deleted.\n";
-    print();
     quit();
+}
+/**************************************
+* quit
+* ----
+* Quits program by throwing exception.
+**************************************/
+void DataBase::quit() {
+    print();
+    throw std::runtime_error("Quit function've called. Shutdown the program...\n");
 }
 /******************************
 * help
@@ -212,23 +229,16 @@ void DataBase::deleteUser() {
 ********************************/
 void help() {
     std::cout << "List of operations with database:\n"
-              << "  chn  - change current user's username;\n"
-              << "  chp  - change current user's password;\n"
-              << "  dusr - delete current user;\n"
-              << "  q    - quit the program.\n";
+        << "  chn  - change current user's username;\n"
+        << "  chp  - change current user's password;\n"
+        << "  duser - delete current user;\n"
+        << "  help - call help;\n"
+        << "  q    - quit the program.\n";
 }
-/**************************************
-* quit
-* ----
-* Quits program by throwing exception.
-**************************************/
-void quit() {
-    throw std::runtime_error("Quit function've called. Shutdown the program...\n");
-}
-
-/*const char parseopt() {
+void parseopt(const DataBase& db) {
     std::cout << ":";
     std::string opt;
     std::cin >> opt;
-
-}*/
+    auto it_func = db.getfunc(opt);
+    it_func->second();
+}
