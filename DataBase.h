@@ -9,9 +9,6 @@
 
 class DataBase {
 private:
-    //typedef std::map<std::string, std::string> Tstringmap;
-    //typedef std::map < std::string, std::function<void()> > Tstring_functionMap;
-
     std::map<std::string, std::string> m_userPasswdMap;
     static std::map < std::string, std::function<void()> > m_funcmap;
     const std::string m_filename = "DataBase.txt";
