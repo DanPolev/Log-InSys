@@ -9,6 +9,14 @@
 
 #include "DataBase.h"
 
+/*************************
+* DataBase::doesUserExist
+* -----------------------
+* Checks if user with the username
+* exists.
+* Returns true if user already exists.
+* Otherwise - false.
+**************************/
 bool DataBase::doesUserExist(const std::string& username) {
     bool doesKeyExist = m_userPasswdMap.count(username);
     if (!doesKeyExist) {
@@ -18,14 +26,23 @@ bool DataBase::doesUserExist(const std::string& username) {
         return true;
     }
 }
-
+/*************************
+* DataBase::setPassword
+* ---------------------
+* Gets the password from user's input.
+* Returns the password to caller.
+****************************/
 const std::string DataBase::setPassword() {
     std::cout << "Enter password:";
     std::string password;
     std::cin >> password;
     return password;
 }
-
+/****************************
+* DataBase::createUser
+* --------------------
+* Adds user to username-password map.
+*****************************/
 void DataBase::createUser(const std::string& username) {
     std::cout << "There is no account with such username.\n"
               << "Creating new account...\n";
@@ -34,7 +51,14 @@ void DataBase::createUser(const std::string& username) {
     m_currUser.setUser(username, password);
     std::cout << username << "'s account created.\n";
 }
-
+/**************************
+* DataBase::isPasswdValid
+* -----------------------
+* Checks password input from user
+* with such username.
+* Returns true if input password is correct.
+* Otherwise, after "quitID" attempts return false.
+******************************/
 bool DataBase::isPasswdValid(const std::string& username, int quitID) {
     std::string password;
     do {
@@ -57,12 +81,22 @@ bool DataBase::isPasswdValid(const std::string& username, int quitID) {
         }
     } while (m_userPasswdMap[username] != password);
 }
-
+/****************************
+* DataBase::setCurrUser
+* ---------------------
+* Sets current user parameters
+* from username-password map.
+******************************/
 void DataBase::setCurrUser(const std::string& username) {
     std::string password = m_userPasswdMap[username];
     m_currUser.setUser(username, password);
 }
-
+/************************************
+* DataBase::read
+* --------------
+* Reads file with usernames and passwords.
+* Makes username-password map from these data.
+***************************************/
 void DataBase::read() {
     std::ifstream inFile;
     inFile.open(m_filename, std::ios::in);
@@ -83,7 +117,11 @@ void DataBase::read() {
         m_userPasswdMap.insert(std::make_pair(username, password));
     }
 }
-
+/***************************************
+* DataBase::print
+* ---------------
+* Prints out username-password map to file.
+****************************************/
 void DataBase::print() const {
     std::ofstream outFile;
 
@@ -101,9 +139,13 @@ void DataBase::print() const {
     std::cout << m_filename << " created.\n";
     outFile.close();
 }
-<<<<<<< HEAD
-=======
-
+/*******************************
+* DataBase::changeUsername
+* ------------------------
+* Changes username of current user.
+* Checks if input username already exists.
+* Updates username-password map.
+*******************************/
 void DataBase::changeUsername() {
     if (!isPasswdValid(m_currUser.getUsername())) {
         return;
@@ -122,7 +164,12 @@ void DataBase::changeUsername() {
     m_userPasswdMap.insert(std::move(nodeHandler));
     m_currUser.setUser(newUsername, m_currUser.getUserPasswd());
 }
-
+/**************************
+* DataBase::changePasswd
+* ----------------------
+* Changes password of current user.
+* Update username-password map.
+**************************/
 void DataBase::changePasswd() {
     if (!isPasswdValid(m_currUser.getUsername())) {
         return;
@@ -135,7 +182,13 @@ void DataBase::changePasswd() {
     m_userPasswdMap[m_currUser.getUsername()] = newPassword;
     std::cout << m_currUser.getUsername() << "'s password has been succesfully changed.\n";
 }
-
+/****************************
+* DataBase::deleteUser
+* --------------------
+* Deletes current user's data from
+* username-password map.
+* Then quits the program.
+*****************************/
 void DataBase::deleteUser() {
     if (!isPasswdValid(m_currUser.getUsername(), 3)) {
         return;
@@ -151,7 +204,12 @@ void DataBase::deleteUser() {
     print();
     quit();
 }
-
+/******************************
+* help
+* ----
+* Prints possible operations with database
+* to current user.
+********************************/
 void help() {
     std::cout << "List of operations with database:\n"
               << "  chn  - change current user's username;\n"
@@ -159,7 +217,11 @@ void help() {
               << "  dusr - delete current user;\n"
               << "  q    - quit the program.\n";
 }
-
+/**************************************
+* quit
+* ----
+* Quits program by throwing exception.
+**************************************/
 void quit() {
     throw std::runtime_error("Quit function've called. Shutdown the program...\n");
 }
@@ -170,4 +232,3 @@ void quit() {
     std::cin >> opt;
 
 }*/
->>>>>>> 78a39dc (- rename isUserCreated() into doesUserExist() with little corrections;)
