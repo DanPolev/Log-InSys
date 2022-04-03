@@ -9,6 +9,11 @@
 
 #include "DataBase.h"
 
+/*
+* DataBase::DataBase
+* ------------------
+* DataBase constructor.
+*/
 DataBase::DataBase() {
     m_funcmap["chn"] = [this]() { changeUsername(); };
     m_funcmap["chp"] = [this]() { changePasswd(); };
@@ -235,6 +240,13 @@ void help() {
         << "  help - call help;\n"
         << "  q    - quit the program.\n";
 }
+/*****************************************
+* parseopt
+* --------
+* Gets option from user as string
+* and call corresponding function
+* from function_name-function_pointer map.
+******************************************/
 void parseopt(const DataBase& db) {
     std::cout << ":";
     std::string opt;

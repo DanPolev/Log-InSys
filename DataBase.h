@@ -11,7 +11,6 @@ typedef std::map<std::string, std::function<void()>>::const_iterator map_constIt
 
 class DataBase {
 private:
-    typedef void(DataBase::* funcPtr)();
     std::map<std::string, std::string> m_userPasswdMap;
     std::map < std::string, std::function<void()> > m_funcmap; // TODO: how to make it static???
     const std::string m_filename = "DataBase.txt";
