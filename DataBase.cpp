@@ -9,11 +9,11 @@
 
 #include "DataBase.h"
 
-/*
+/*********************
 * DataBase::DataBase
 * ------------------
 * DataBase constructor.
-*/
+**********************/
 DataBase::DataBase() {
     m_funcmap["chn"] = [this]() { changeUsername(); };
     m_funcmap["chp"] = [this]() { changePasswd(); };
