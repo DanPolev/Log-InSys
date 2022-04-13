@@ -5,7 +5,7 @@
 #include <map>
 #include <string>
 #include <exception>
-#include <iomanip>  // for setw() func
+#include <iomanip>
 
 #include "DataBase.h"
 
@@ -19,7 +19,7 @@ DataBase::DataBase() {
     m_funcmap["chp"] = [this]() { changePasswd(); };
     m_funcmap["duser"] = [this]() { deleteUser(); };
     m_funcmap["help"] = []() { help(); };
-    m_funcmap["q"] = [this]() { quit(); };
+    m_funcmap["q"] = [this]() { quit(*this); };
 }
 
 /*************************
@@ -30,7 +30,7 @@ DataBase::DataBase() {
 * Returns true if user already exists.
 * Otherwise - false.
 **************************/
-bool DataBase::doesUserExist(const std::string& username) {
+bool DataBase::doesUserExist(const std::string& username) const {
     bool doesKeyExist = m_userPasswdMap.count(username);
     if (!doesKeyExist) {
         return false;
@@ -215,15 +215,15 @@ void DataBase::deleteUser() {
 
     m_userPasswdMap.erase(m_currUser.getUsername());
     std::cout << "User " << m_currUser.getUsername() << " deleted.\n";
-    quit();
+    quit(*this);
 }
 /**************************************
 * quit
 * ----
 * Quits program by throwing exception.
 **************************************/
-void DataBase::quit() {
-    print();
+void quit(DataBase& db) {
+    db.print();
     throw std::runtime_error("Quit function've called. Shutdown the program...\n");
 }
 /******************************
@@ -233,7 +233,8 @@ void DataBase::quit() {
 * to current user.
 ********************************/
 void help() {
-    std::cout << "List of operations with database:\n"
+    std::cout << "---------------------------------\n"
+        << "List of operations with database:\n"
         << "  chn  - change current user's username;\n"
         << "  chp  - change current user's password;\n"
         << "  duser - delete current user;\n"
