@@ -252,6 +252,12 @@ void parseopt(const DataBase& db) {
     std::cout << ":";
     std::string opt;
     std::cin >> opt;
-    auto it_func = db.getfunc(opt);
+    bool correctOpt = db.hasOperation(opt);
+    map_constIterator it_func;
+    if (!correctOpt) {
+        it_func = db.getfunc("help");
+    } else {
+        it_func = db.getfunc(opt);
+    }
     it_func->second();
 }

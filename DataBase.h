@@ -29,7 +29,10 @@ public:
     void changeUsername();
     void changePasswd();
     void deleteUser();
-    map_constIterator getfunc(const std::string& opt) const { return m_funcmap.find(opt); }
+    bool hasOperation(const std::string& operation) const // checks if given operation exists
+        { return m_funcmap.count(operation); } 
+    map_constIterator getfunc(const std::string& opt) const // provides function pointer from function name
+        { return m_funcmap.find(opt); }      
 };
 void help();
 void quit(DataBase& db);
