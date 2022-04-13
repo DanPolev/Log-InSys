@@ -210,11 +210,18 @@ void DataBase::deleteUser() {
     std::cout << "CAUTION: You are going to delete your data from database!\n";
     std::cout << "Are you sure?(y/n):";
     char answer;
-    std::cin >> answer;
-    if (answer == 'n') return;
+    while (1) {
+        std::cin >> answer;
+        if (answer == 'n') return;
+        else if (answer == 'y') break;
+        else {
+            std::cout << "Yes(y) or No(n):";
+            continue;
+        }
+    }
 
     m_userPasswdMap.erase(m_currUser.getUsername());
-    std::cout << "User " << m_currUser.getUsername() << " deleted.\n";
+    std::cout << "User " << m_currUser.getUsername() << " has been deleted.\n";
     quit(*this);
 }
 /**************************************
