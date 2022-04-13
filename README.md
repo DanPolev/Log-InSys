@@ -1,2 +1,6 @@
 # A simple log-in/registration system.
-Writes input username and password to file.
+Saves username and password to the database file.
+Lets user perform simple operations with database:
+  - change username;
+  - change password;
+  - delete own account from database file.
