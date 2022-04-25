@@ -20,27 +20,20 @@ int main()
         std::cout << "Enter username:";
         std::string username;
         std::cin >> username;
-        bool locked(true);
+        bool isAuthorized(false);
         if (db.doesUserExist(username)) {
             if (db.isPasswdValid(username)) {
-                locked = false;
+                isAuthorized = true;
                 db.setCurrUser(username);
             }
         }
         else {
             db.createUser(username);
-            locked = false;
+            isAuthorized = true;
         }
 
-        if (!locked) {
-            int i(0);
-            while (1) {
-                if (i == 0) {
-                    help();
-                    i++;
-                }
-                parseopt(db);
-            }
+        if (isAuthorized) {
+            inputHandle(db);
         }
     }
     catch (std::exception& e) {

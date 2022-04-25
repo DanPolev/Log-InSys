@@ -36,4 +36,4 @@ public:
 };
 void help();
 void quit(DataBase& db);
-void parseopt(const DataBase& db);
+void inputHandle(const DataBase& db);

@@ -248,23 +248,32 @@ void help() {
         << "  help - call help;\n"
         << "  q    - quit the program.\n";
 }
-/*****************************************
-* parseopt
-* --------
-* Gets option from user as string
-* and call corresponding function
+/******************************************
+* inputHandle
+* -----------
+* Handles user's input:
+* gets option from user as string
+* and calls corresponding function
 * from function_name-function_pointer map.
 ******************************************/
-void parseopt(const DataBase& db) {
-    std::cout << ":";
-    std::string opt;
-    std::cin >> opt;
-    bool correctOpt = db.hasOperation(opt);
-    map_constIterator it_func;
-    if (!correctOpt) {
-        it_func = db.getfunc("help");
-    } else {
-        it_func = db.getfunc(opt);
+void inputHandle(const DataBase& db) {
+    int i(0);
+    while (1) {
+        if (i == 0) {
+            help();
+            i++;
+        }
+        std::cout << ":";
+        std::string opt;
+        std::cin >> opt;
+        bool is_correctOpt = db.hasOperation(opt);
+        map_constIterator it_func;
+        if (!is_correctOpt) {
+            it_func = db.getfunc("help");
+        }
+        else {
+            it_func = db.getfunc(opt);
+        }
+        it_func->second();
     }
-    it_func->second();
 }
